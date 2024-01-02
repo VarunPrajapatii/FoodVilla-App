@@ -1,0 +1,18 @@
+{
+  "name": "foodvilla-app",
+  "description": "I've made a food delivery platform using React and I have named it FoodVilla.",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Varun Prajapati",
+  "license": "ISC",
+
+  "devDependencies": {
+    "parcel": "^2.10.3"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
