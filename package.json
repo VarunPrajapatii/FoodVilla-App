@@ -3,6 +3,8 @@
   "description": "I've made a food delivery platform using React and I have named it FoodVilla.",
   "version": "1.0.0",
   "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "jest"
   },
   "author": "Varun Prajapati",
