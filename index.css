@@ -33,3 +33,14 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.shimmer-card {
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+    background-color: lightgrey;
+}
+
+.res-img{ 
+    width: 300px;
+}

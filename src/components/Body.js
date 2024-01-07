@@ -1,24 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { restaurantList } from "../constants";
 import RestaurantCard from "./RestaurantCard";
+import Shimmer from "./Shimmer";
 
 
 
 function filterData(searchText, restaurants) {
     const filterData = restaurants.filter((restaurant) => 
-        restaurant.info.name.includes(searchText)
+        restaurant?.info?.name?.toLowerCase()?.includes(searchText.toLowerCase())
     );
-    // console.log(restaurants);
+    // console.log(filterData);
     return filterData;
 };
 
 
 
 const Body =() => {
-    const [restaurants, setRestaurants] = useState(restaurantList);
-    const [searchText, setSearchText] = useState("");
+    const [allRestaurants, setAllRestaurants] = useState([]);
+    //Were rendering filteredRestaurants then why is allRestaurants required then?  Its to search/ to filter
+    const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+    const [searchText, setSearchText] = useState();
 
-    return (
+    useEffect(() => {
+        getRestaurants();
+    }, []);     //empty dependency array is useeffect will be called once after initial render only.
+
+    console.log("render");
+
+    async function getRestaurants() {
+        const data = await fetch(
+            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.7195687&lng=75.8577258&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+        );
+        const json = await data.json();
+        console.log(json);
+        setAllRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        console.log(allRestaurants);
+    }
+
+
+
+    if(!allRestaurants) return null;
+    // if(filteredRestaurants?.length == 0)
+    //     return <h1>No Restaurant matches your Search</h1>
+
+    return (allRestaurants.length == 0) ? <Shimmer /> : (
         <>
             <div className="search-container">
                 <input 
@@ -33,27 +59,25 @@ const Body =() => {
                 <button 
                     className="search-btn"
                     onClick={() => {
-                        const data = filterData(searchText, restaurants);
-                        setRestaurants(data);
+                        const data = filterData(searchText, allRestaurants);
+                        setFilteredRestaurants(data);
                     }}
                 >Search</button>
             </div>
 
             <div className="restaurant-list">
-                    {
-                        restaurants.map((restaurant) => {
-                            return (
-                                <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
-                            );
-                            
-                           {/*or you can pass restaurant as prop and you can destructure it
-                            <RestaurantCard restaurnat={restaurantList[0].info}
-                            or you can pass in like this too
-                            <RestaurantCard name={restaurantList[0].info.name cuisines={restaurantList[0].info.name}}
-                            or there are many ways.
-                            We want to pass in all as props so we use spread operator */}
-                        })
-                    }
+                {/* You have to write logic for no restaurant found here */}
+                {filteredRestaurants.map((restaurant) => {
+                    return (
+                        <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+                    );                            
+                    {/*or you can pass restaurant as prop and you can destructure it
+                     <RestaurantCard restaurnat={restaurantList[0].info}
+                     or you can pass in like this too
+                     <RestaurantCard name={restaurantList[0].info.name cuisines={restaurantList[0].info.name}}
+                     or there are many ways.
+                     We want to pass in all as props so we use spread operator */}
+                })}
             </div>
         </>
         
