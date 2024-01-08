@@ -2,20 +2,13 @@ import { useEffect, useState } from "react";
 import { restaurantList } from "../constants";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
+import { filterData } from "../utils/helper";
 
 
 
-function filterData(searchText, restaurants) {
-    const filterData = restaurants.filter((restaurant) => 
-        restaurant?.info?.name?.toLowerCase()?.includes(searchText.toLowerCase())
-    );
-    // console.log(filterData);
-    return filterData;
-};
 
-
-
-const Body =() => {
+const Body =  () => {
     const [allRestaurants, setAllRestaurants] = useState([]);
     //Were rendering filteredRestaurants then why is allRestaurants required then?  Its to search/ to filter
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
@@ -69,7 +62,9 @@ const Body =() => {
                 {/* You have to write logic for no restaurant found here */}
                 {filteredRestaurants.map((restaurant) => {
                     return (
-                        <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+                        <Link to={"restaurant/" + restaurant.info.id} >
+                            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+                        </Link>
                     );                            
                     {/*or you can pass restaurant as prop and you can destructure it
                      <RestaurantCard restaurnat={restaurantList[0].info}
