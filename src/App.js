@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 import {createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import About from "./components/About";
 import Error from "./components/Error"
 import Contact from "./components/Contact";
 import RestaurantMenu from "./components/RestaurantMenu";
@@ -16,6 +15,7 @@ import Profile from "./components/Profile";
 const Instamart = lazy(() => import("./components/Instamart.js"));
 // Upon on Demand Loading -> upon render -> suspend loading (because code not there)...
 
+const About = lazy(() => import("./components/About.js"))
 
 const AppLayout = () => {
     return (
@@ -40,7 +40,11 @@ const appRouter = createBrowserRouter([
             },
             {
                 path: "/about",
-                element: <About />,
+                element: (
+                    <Suspense fallback= {<h1>Loading....</h1>}>
+                        <About />
+                    </Suspense>
+                ),
                 children: [
                     {
                         path: "profile",
