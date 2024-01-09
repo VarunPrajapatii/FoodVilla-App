@@ -6,10 +6,9 @@ import { Component } from "react";
 
 
 class About extends Component {
-
+     
     constructor(props) {
-        super(props);
-
+        super(props);        
         console.log("Parent - constructor");
     }
 

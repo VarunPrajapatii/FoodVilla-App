@@ -4,6 +4,8 @@ import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { filterData } from "../utils/helper";
+import useOnline from "../utils/useOnline";
+import React from "react";
 
 
 
@@ -16,7 +18,7 @@ const Body =  () => {
 
     useEffect(() => {
         getRestaurants();
-    }, []);     //empty dependency array is useeffect will be called once after initial render only.
+    }, []);     // empty dependency array is useeffect will be called once after initial render only.
 
     console.log("render");
 
@@ -31,7 +33,10 @@ const Body =  () => {
         console.log(allRestaurants);
     }
 
-
+    // const isOnline = useOnline();
+    // if(!isOnline) {
+    //     return <h1>🔴 Offline, Please check your Internet Connection!!</h1>
+    // }
 
     if(!allRestaurants) return null;
     // if(filteredRestaurants?.length == 0)

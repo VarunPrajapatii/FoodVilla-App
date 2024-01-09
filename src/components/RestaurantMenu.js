@@ -3,15 +3,20 @@ import { useParams, useResolvedPath } from "react-router-dom";
 import { IMG_CDN_URL } from "../constants";
 import Shimmer from "./Shimmer";
 import useRestaurant from "../utils/useRestaurant";
+import useOnline from "../utils/useOnline";
 
 const RestaurantMenu = () => {
     // this is how we read a dynamic URL params
     const param = useParams();
     const {resId} = param;
 
+    const isOnline = useOnline();
 
     const restaurant = useRestaurant(resId);
 
+    if(!isOnline) {
+        return <h1>🔴 Offline, Please check your Internet Connection!!</h1>
+    }
     return (!restaurant) ? <Shimmer /> :  (
         <div>
             <h1>Restaurant id: {restaurant?.id}</h1>
