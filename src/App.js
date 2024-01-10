@@ -11,11 +11,13 @@ import Profile from "./components/Profile";
 
 
 
-
 const Instamart = lazy(() => import("./components/Instamart.js"));
+const About = lazy(() => import("./components/About.js"))
+
+
 // Upon on Demand Loading -> upon render -> suspend loading (because code not there)...
 
-const About = lazy(() => import("./components/About.js"))
+
 
 const AppLayout = () => {
     return (
