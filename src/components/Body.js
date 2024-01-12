@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { restaurantList } from "../constants";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { filterData } from "../utils/helper";
 import useOnline from "../utils/useOnline";
 import React from "react";
-
+import UserContext from "../utils/UserContext";
 
 
 
@@ -15,6 +15,7 @@ const Body =  () => {
     //Were rendering filteredRestaurants then why is allRestaurants required then?  Its to search/ to filter
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [searchText, setSearchText] = useState();
+    const {user, setUser} = useContext(UserContext);
 
     useEffect(() => {
         getRestaurants();
@@ -28,8 +29,8 @@ const Body =  () => {
         );
         const json = await data.json();
         console.log(json);
-        setAllRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setFilteredRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setAllRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         console.log(allRestaurants);
     }
 
@@ -61,6 +62,24 @@ const Body =  () => {
                         setFilteredRestaurants(data);
                     }}
                 >Search</button>
+                <input 
+                    value={user.name} 
+                    onChange={
+                        e => setUser({
+                            ...user,
+                            name: e.target.value,                            
+                        })
+                    }
+                />
+                <input 
+                    value={user.email} 
+                    onChange={
+                        e => setUser({
+                            ...user,
+                            email: e.target.value,
+                        })
+                }
+                />
             </div>
 
             <div className="flex flex-wrap bg-pink-200 ">

@@ -1,4 +1,5 @@
 import React from "react";
+import UserContext from "../utils/UserContext";
 
 class Profile extends React.Component {
 
@@ -45,6 +46,9 @@ class Profile extends React.Component {
 
         return (
             <div>
+                <UserContext.Consumer>
+                    {({ user }) => <h4 className="font-bold text-xl p-10">{user.name} - {user.email} </h4>}
+                </UserContext.Consumer>
                 <h1>Profile Class Component</h1>
                 <h2>Name: {this?.state?.userInfo?.name}</h2>
                 <img src={this?.state?.userInfo?.avatar_url} />
