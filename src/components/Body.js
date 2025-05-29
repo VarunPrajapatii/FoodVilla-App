@@ -24,24 +24,22 @@ const Body =  () => {
     console.log("render");
 
     async function getRestaurants() {
-        const data = await fetch(
-            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.7195687&lng=75.8577258&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-        );
+        const data = await fetch("http://localhost:3001/api/restaurants")
+;
         const json = await data.json();
-        console.log(json);
+        console.log("Varun", json);
         setAllRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        console.log(allRestaurants);
     }
 
-    // const isOnline = useOnline();
-    // if(!isOnline) {
-    //     return <h1>🔴 Offline, Please check your Internet Connection!!</h1>
-    // }
+    const isOnline = useOnline();
+    if(!isOnline) {
+        return <h1>🔴 Offline, Please check your Internet Connection!!</h1>
+    }
 
     if(!allRestaurants) return null;
-    // if(filteredRestaurants?.length == 0)
-    //     return <h1>No Restaurant matches your Search</h1>
+    if(filteredRestaurants?.length == 0)
+        return <h1>No Restaurant matches your Search</h1>
 
     return (allRestaurants.length == 0) ? <Shimmer /> : (
         <>
@@ -82,7 +80,7 @@ const Body =  () => {
                 />
             </div>
 
-            <div className="flex flex-wrap bg-pink-200 ">
+            <div className="flex flex-wrap bg-pink-50 ">
                 {/* You have to write logic for no restaurant found here */}
                 {filteredRestaurants.map((restaurant) => {
                     return (

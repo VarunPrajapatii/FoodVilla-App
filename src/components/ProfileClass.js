@@ -54,6 +54,7 @@ class Profile extends React.Component {
                 <img src={this?.state?.userInfo?.avatar_url} />
                 <h2>Location: {this?.state?.userInfo?.location}</h2>
                 <button 
+                    className="bg-pink-50"
                     onClick={() => {
                         //We do not mutate state directly
                         //Never do this.state = something

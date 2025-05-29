@@ -4,7 +4,7 @@ import ProfileFunctionalComponent from "./Profile";
 import { Component } from "react";
 
 
-
+// About is made of class based component, not the usual function component
 class About extends Component {
      
     constructor(props) {
